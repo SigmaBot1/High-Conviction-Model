@@ -1,0 +1,21 @@
+# Cached data (large, regeneratable)
+data_cache/
+output/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pkl
+
+# Environment
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
