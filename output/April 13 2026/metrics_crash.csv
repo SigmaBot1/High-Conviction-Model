@@ -1,0 +1,2 @@
+ann_return_model,ann_return_spy,alpha,sharpe_model,sharpe_spy,max_dd_model,max_dd_spy,win_rate,total_trades,closed_trades,avg_hold_days,mode
+0.018463327855947176,0.13186211893468913,-0.11339879107874196,-0.3195281287503482,0.6376140391960095,-0.0535881727617192,-0.3371726321428831,1.0,5,2,669.2,crash

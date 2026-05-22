@@ -1,0 +1,284 @@
+{
+  "MSFT": {
+    "score": 11,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:09"
+  },
+  "APPF": {
+    "score": 10,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:09"
+  },
+  "AMBA": {
+    "score": 8,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-05-22 19:09"
+  },
+  "PLTR": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:09"
+  },
+  "PTC": {
+    "score": 11,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:09"
+  },
+  "ARES": {
+    "score": 11,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:09"
+  },
+  "NKE": {
+    "score": 8,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-05-22 19:09"
+  },
+  "ATAT": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:09"
+  },
+  "BIRK": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:09"
+  },
+  "AU": {
+    "score": 10,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:09"
+  },
+  "AXON": {
+    "score": 11,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "BSX": {
+    "score": 10,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "CF": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "EVR": {
+    "score": 7,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-05-22 19:10"
+  },
+  "GFI": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "GRAB": {
+    "score": 8,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-05-22 19:10"
+  },
+  "GWRE": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "HL": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "HUBS": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "IAG": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "ISRG": {
+    "score": 10,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "KGC": {
+    "score": 10,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "MNST": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "NBIX": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "ONON": {
+    "score": 10,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "PODD": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "RDDT": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "SCCO": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:10"
+  },
+  "SE": {
+    "score": 7,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-05-22 19:11"
+  },
+  "SN": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "VEEV": {
+    "score": 10,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "WTS": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "Z": {
+    "score": 7,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-05-22 19:11"
+  },
+  "CLBT": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "CXT": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "DAVE": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "DSGX": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "DUOL": {
+    "score": 10,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "ELF": {
+    "score": 8,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-05-22 19:11"
+  },
+  "FROG": {
+    "score": 8,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-05-22 19:11"
+  },
+  "GLBE": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "LEGN": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "LIF": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "MNDY": {
+    "score": 10,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "PRDO": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "SEZL": {
+    "score": 10,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  },
+  "OKTA": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-05-22 19:11"
+  }
+}

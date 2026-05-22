@@ -1,0 +1,6 @@
+ticker,tier,entry_date,entry_price,exit_date,exit_price,return_pct,pnl_dollars,hold_days,exit_reason
+CPRT,crash,2022-04-22,29.0375,2024-12-30,58.13,100.19,83491.18,983,backtest_end
+GOOG,crash,2022-05-23,110.7572,2024-12-30,191.8076,73.18,60982.08,952,backtest_end
+MSFT,crash,2022-09-02,248.8102,2024-12-30,420.7587,69.11,57590.28,850,backtest_end
+CTRA,crash,2022-10-03,23.6806,2023-11-14,25.0764,5.89,4911.84,407,neg_revenue_2q
+COP,crash,2023-03-13,91.0018,2023-08-14,108.2338,18.94,15779.86,154,neg_revenue_2q
