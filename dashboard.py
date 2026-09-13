@@ -11,6 +11,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+import sys
 import re
 import json
 import glob
@@ -1020,7 +1021,7 @@ with tabs[0]:
             with st.spinner("Running QVM ranking on full universe..."):
                 try:
                     result = subprocess.run(
-                        ['python', scanner_script, '--qvm-rank'],
+                        [sys.executable, scanner_script, '--qvm-rank'],
                         capture_output=True, text=True, timeout=180,
                         cwd=BASE_DIR, encoding='utf-8', errors='replace'
                     )
@@ -1237,7 +1238,7 @@ with tabs[1]:
                     progress_bar.progress((i + 1) / len(watchlist), text=f"Diagnosing {ticker} ({i+1}/{len(watchlist)})...")
                     try:
                         result = subprocess.run(
-                            ['python', diag_script, ticker],
+                            [sys.executable, diag_script, ticker],
                             capture_output=True, text=True, timeout=60,
                             cwd=BASE_DIR, encoding='utf-8', errors='replace'
                         )
@@ -1302,7 +1303,7 @@ with tabs[1]:
                     json.dump(cached_scores, f, indent=2)
                 
                 # Show raw output
-                with st.expander("Full Diagnose Output"):
+                with st.expander("Full Diagnosis Output"):
                     st.code('\n'.join(all_outputs), language="text")
                 
                 st.success(f"Scores updated for {len(cached_scores)} tickers (SimFin data)")
@@ -1414,7 +1415,7 @@ with tabs[2]:
         screen_btn = st.button("\U0001F50D Quick Scan", key="screen_btn")
     with col_diag:
         st.markdown("<br>", unsafe_allow_html=True)
-        diag_btn = st.button("\U0001F9EA Full Diagnose", key="diag_btn")
+        diag_btn = st.button("\U0001F9EA Full Diagnosis", key="diag_btn")
     
     # Full diagnose (runs diagnose.py via subprocess)
     if screen_ticker and diag_btn:
@@ -1424,7 +1425,7 @@ with tabs[2]:
             with st.spinner(f"Running full diagnose on {screen_ticker}..."):
                 try:
                     result = subprocess.run(
-                        ['python', diag_script, screen_ticker],
+                        [sys.executable, diag_script, screen_ticker],
                         capture_output=True, text=True, timeout=120,
                         cwd=BASE_DIR, encoding='utf-8', errors='replace'
                     )
@@ -1522,7 +1523,7 @@ with tabs[2]:
                 st.markdown("""
                 <div class='status-card status-card-green'>
                     <strong>\u26A1 CRASH-TIER CANDIDATE</strong><br>
-                    <span style='color:#8b949e;'>Price-based filters passing. Click "Full Diagnose" above for fundamental filters (F1-F7).
+                    <span style='color:#8b949e;'>Price-based filters passing. Click "Full Diagnosis" above for fundamental filters (F1-F7).
                     If 12/12: read last 2 earnings transcripts, run dip/crash framework, make buy/no-buy decision.</span>
                 </div>
                 """, unsafe_allow_html=True)
@@ -1539,7 +1540,7 @@ with tabs[2]:
                 <div class='status-card status-card-red'>
                     <strong>\u23F3 NO ACTION</strong><br>
                     <span style='color:#8b949e;'>No entry conditions met. Market calm, stock near highs or in freefall.
-                    Click "Full Diagnose" for complete fundamental + technical analysis.</span>
+                    Click "Full Diagnosis" for complete fundamental + technical analysis.</span>
                 </div>
                 """, unsafe_allow_html=True)
         else:
@@ -1561,7 +1562,7 @@ with tabs[3]:
                 with st.spinner("Running backtest... (this takes 5-10 minutes)"):
                     try:
                         result = subprocess.run(
-                            ['python', main_script],
+                            [sys.executable, main_script],
                             capture_output=True, text=True, timeout=900,
                             cwd=BASE_DIR, encoding='utf-8', errors='replace'
                         )
@@ -1779,7 +1780,7 @@ with tabs[4]:
                 with st.spinner("Running 10,000 simulations..."):
                     try:
                         result = subprocess.run(
-                            ['python', mc_script],
+                            [sys.executable, mc_script],
                             capture_output=True, text=True, timeout=300,
                             cwd=BASE_DIR, encoding='utf-8', errors='replace'
                         )

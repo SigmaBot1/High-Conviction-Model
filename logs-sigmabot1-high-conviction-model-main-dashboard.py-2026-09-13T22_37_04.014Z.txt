@@ -1,0 +1,205 @@
+
+[     UTC     ] Logs for high-conviction-model-fryvf9e4bmfgpbvuangm8y.streamlit.app/
+────────────────────────────────────────────────────────────────────────────────────────
+[22:26:20] 🚀 Starting up repository: 'high-conviction-model', branch: 'main', main module: 'dashboard.py'
+[22:26:20] 🐙 Cloning repository...
+[22:26:23] 🐙 Cloning into '/mount/src/high-conviction-model'...
+
+[22:26:23] 🐙 Cloned repository!
+[22:26:23] 🐙 Pulling code changes from Github...
+[22:26:24] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+Using Python 3.14.7 environment at /home/adminuser/venv
+Resolved 34 packages in 570ms
+Prepared 34 packages in 1.94s
+Installed 34 packages in 69ms
+ + beautifulsoup4==4.15.0
+ + certifi==2026.7.22
+ + cffi==2.1.1
+ + charset-normalizer==3.5.1
+ + contourpy==1.4.0
+ + curl-cffi==0.16.3
+ + cycler==0.12.1
+ + fonttools==4.65.0
+ + idna==3.19[2026-09-13 22:26:27.738021] 
+ + kiwisolver==1.5.1
+ + lxml==6.1.3
+ + matplotlib==3.11.2
+ [2026-09-13 22:26:27.738274] + multitasking==0.0.13
+ + numpy==2.5.3
+ + packaging==26.3
+ + pandas==3.0.5
+ + peewee==4.5.1
+ + [2026-09-13 22:26:27.738616] pillow==12.3.0
+ + platformdirs==4.11.8
+ + protobuf==7.36.1
+ + pycparser==3.0
+ + pyparsing==3.3.2[2026-09-13 22:26:27.738783] 
+ + python-dateutil==2.9.0.post0
+ + pytz==2026.3.post1
+ + requests==2.34.2
+ + scipy==1.18.1[2026-09-13 22:26:27.738952] 
+ + seaborn==0.13.2
+ + six==1.17.0
+ + soupsieve==2.9.2
+ + tqdm==4.70.1[2026-09-13 22:26:27.739099] 
+ + typing-extensions==4.16.0
+ + urllib3==2.7.0
+ + [2026-09-13 22:26:27.739310] websockets==17.1
+ + yfinance==1.7.0
+Checking if Streamlit is installed
+Installing rich for an improved exception logging
+Using uv pip install.
+Using Python 3.14.7 environment at /home/adminuser/venv
+Resolved 4 packages in 1.03s
+Prepared 4 packages in 125ms
+Installed 4 packages in 15ms
+ + markdown-it-py==4.2.0
+ +[2026-09-13 22:26:30.144141]  mdurl==0.1.2
+ + pygments==2.21.0
+ + rich==15.0.0
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[22:26:31] 🐍 Python dependencies were installed from /mount/src/high-conviction-model/requirements.txt using uv.
+Check if streamlit is installed
+
+──────────────────────────────── Installing Streamlit ──────────────────────────────────
+
+Using uv pip install.
+Using Python 3.14.7 environment at /home/adminuser/venv
+Resolved 36 packages in 313ms
+Prepared 23 packages in 1.16s
+Uninstalled 1 package in 2ms
+Installed 23 packages in 36ms
+ + altair==6.2.2
+ + anyio==4.15.1
+ + attrs==26.1.0
+ + click==8.5.0
+ + h11==0.16.0
+ + httptools==[2026-09-13 22:26:32.821711] 0.8.0
+ + itsdangerous==2.2.0
+ + jinja2==3.1.6
+ + jsonschema==[2026-09-13 22:26:32.821938] 4.26.0
+ + jsonschema-specifications==2025.9.1
+ + markupsafe==3.0.3
+ + [2026-09-13 22:26:32.822092] narwhals==[2026-09-13 22:26:32.822282] 2.26.0
+ + pyarrow==25.0.1
+ + pydeck==0.9.3
+ + python-multipart==0.0.32
+ + referencing[2026-09-13 22:26:32.822463] ==0.37.0
+ + rpds-py==2026.6.3
+ + starlette==1.6.0
+ + streamlit==1.63.0
+ + [2026-09-13 22:26:32.822640] toml==0.10.2
+ + uvicorn==0.52.4
+ + watchdog==6.0.0
+ - websockets==17.1
+ + websockets[2026-09-13 22:26:32.822780] ==16.1.1
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[22:26:33] 📦 Processed dependencies!
+2026-09-13 22:26:36.586 Uvicorn server started on :::8501
+
+
+
+2026-09-13 22:26:46.216 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-09-13 22:26:46.225 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+────────────────────── Traceback (most recent call last) ───────────────────────
+  /home/adminuser/venv/lib/python3.14/site-packages/streamlit/runtime/scriptru  
+  nner/exec_code.py:136 in exec_func_with_error_handling                        
+                                                                                
+  /home/adminuser/venv/lib/python3.14/site-packages/streamlit/runtime/scriptru  
+  nner/script_runner.py:827 in code_to_exec                                     
+                                                                                
+  /mount/src/high-conviction-model/dashboard.py:1135 in <module>                
+                                                                                
+    1132 │   # Live P&L chart for current positions                             
+    1133 │   if not positions_df.empty and total_cost > 0:                      
+    1134 │   │   st.markdown("#### Position Performance")                       
+  ❱ 1135 │   │   import plotly.graph_objects as go                              
+    1136 │   │                                                                  
+    1137 │   │   pnl_tickers = []                                               
+    1138 │   │   pnl_dollars = []                                               
+────────────────────────────────────────────────────────────────────────────────
+ModuleNotFoundError: No module named 'plotly'
+────────────────────── Traceback (most recent call last) ───────────────────────
+  /home/adminuser/venv/lib/python3.14/site-packages/streamlit/runtime/scriptru  
+  nner/exec_code.py:136 in exec_func_with_error_handling                        
+                                                                                
+  /home/adminuser/venv/lib/python3.14/site-packages/streamlit/runtime/scriptru  
+  nner/script_runner.py:827 in code_to_exec                                     
+                                                                                
+  /mount/src/high-conviction-model/dashboard.py:1135 in <module>                
+                                                                                
+    1132 │   # Live P&L chart for current positions                             
+    1133 │   if not positions_df.empty and total_cost > 0:                      
+    1134 │   │   st.markdown("#### Position Performance")                       
+  ❱ 1135 │   │   import plotly.graph_objects as go                              
+    1136 │   │                                                                  
+    1137 │   │   pnl_tickers = []                                               
+    1138 │   │   pnl_dollars = []                                               
+────────────────────────────────────────────────────────────────────────────────
+ModuleNotFoundError: No module named 'plotly'
+2026-09-13 22:26:49.030 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+────────────────────── Traceback (most recent call last) ───────────────────────
+  /home/adminuser/venv/lib/python3.14/site-packages/streamlit/runtime/scriptru  
+  nner/exec_code.py:136 in exec_func_with_error_handling                        
+                                                                                
+  /home/adminuser/venv/lib/python3.14/site-packages/streamlit/runtime/scriptru  
+  nner/script_runner.py:827 in code_to_exec                                     
+                                                                                
+  /mount/src/high-conviction-model/dashboard.py:1135 in <module>                
+                                                                                
+    1132 │   # Live P&L chart for current positions                             
+    1133 │   if not positions_df.empty and total_cost > 0:                      
+    1134 │   │   st.markdown("#### Position Performance")                       
+  ❱ 1135 │   │   import plotly.graph_objects as go                              
+    1136 │   │                                                                  
+    1137 │   │   pnl_tickers = []                                               
+    1138 │   │   pnl_dollars = []                                               
+────────────────────────────────────────────────────────────────────────────────
+ModuleNotFoundError: No module named 'plotly'
+[22:32:08] 🐙 Pulling code changes from Github...
+[22:32:10] 📦 Processing dependencies...
+[22:32:10] 📦 Processed dependencies!
+[22:32:13] 🔄 Updated app!
+2026-09-13 22:35:59.680 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+────────────────────── Traceback (most recent call last) ───────────────────────
+  /home/adminuser/venv/lib/python3.14/site-packages/streamlit/runtime/scriptru  
+  nner/exec_code.py:136 in exec_func_with_error_handling                        
+                                                                                
+  /home/adminuser/venv/lib/python3.14/site-packages/streamlit/runtime/scriptru  
+  nner/script_runner.py:827 in code_to_exec                                     
+                                                                                
+  /mount/src/high-conviction-model/dashboard.py:1135 in <module>                
+                                                                                
+    1132 │   # Live P&L chart for current positions                             
+    1133 │   if not positions_df.empty and total_cost > 0:                      
+    1134 │   │   st.markdown("#### Position Performance")                       
+  ❱ 1135 │   │   import plotly.graph_objects as go                              
+    1136 │   │                                                                  
+    1137 │   │   pnl_tickers = []                                               
+    1138 │   │   pnl_dollars = []                                               
+────────────────────────────────────────────────────────────────────────────────
+ModuleNotFoundError: No module named 'plotly'
