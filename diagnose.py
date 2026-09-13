@@ -398,9 +398,23 @@ def _evaluate_all(
     ps_val      = fa.ps_ratio(date, market_cap) if market_cap else None
 
     if profitable:
-        pass_f6 = None if peg_val is None else peg_val < cfg.MAX_PEG_RATIO
-        check("F6", f"PEG <{cfg.MAX_PEG_RATIO} (profitable co.)", pass_f6,
-              [f"P/E: {_x(pe_val)}  |  PEG: {_x(peg_val)}  [need <{cfg.MAX_PEG_RATIO}]"])
+        if peg_val is not None:
+            pass_f6 = peg_val < cfg.MAX_PEG_RATIO
+            check("F6", f"PEG <{cfg.MAX_PEG_RATIO} (profitable co.)", pass_f6,
+                  [f"P/E: {_x(pe_val)}  |  PEG: {_x(peg_val)}  [need <{cfg.MAX_PEG_RATIO}]"])
+        else:
+            rev_g1 = rg[0] if rg else None
+            if ps_val is None:
+                pass_f6 = None
+            else:
+                pass_f6 = (
+                    ps_val < cfg.MAX_PS_PRE_PROFITABLE
+                    and rev_g1 is not None
+                    and rev_g1 > cfg.MIN_GROWTH_PRE_PROFITABLE
+                )
+            check("F6", f"PEG n/a — P/S <{cfg.MAX_PS_PRE_PROFITABLE} + rev >30% (profitable, PEG unavailable)", pass_f6,
+                  [f"P/E: {_x(pe_val)}  |  PEG: n/a  |  P/S: {_x(ps_val)}  |  Rev growth: {_pct(rev_g1)}"
+                   f"  [need P/S <{cfg.MAX_PS_PRE_PROFITABLE} and growth >{_pct(cfg.MIN_GROWTH_PRE_PROFITABLE)}]"])
     else:
         rev_g1 = rg[0] if rg else None
         if ps_val is None:

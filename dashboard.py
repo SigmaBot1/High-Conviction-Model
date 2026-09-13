@@ -11,6 +11,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+import re
 import json
 import glob
 from datetime import datetime, timedelta
@@ -26,171 +27,67 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------------------------------
-# DARK THEME CSS
+# DESIGN SYSTEM CSS
 # ---------------------------------------------------------------------------
 st.markdown("""
 <style>
-    /* Main background */
-    .stApp {
-        background-color: #0d1117;
-        color: #c9d1d9;
-    }
-    
-    /* Sidebar */
-    [data-testid="stSidebar"] {
-        background-color: #161b22;
-    }
-    
-    /* Headers */
-    h1, h2, h3 {
-        color: #58a6ff !important;
-        font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
-    }
-    
-    /* Metric cards */
-    [data-testid="stMetric"] {
-        background-color: #161b22;
-        border: 1px solid #30363d;
-        border-radius: 8px;
-        padding: 16px;
-    }
-    [data-testid="stMetricLabel"] {
-        color: #8b949e !important;
-        font-size: 0.8rem !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1px !important;
-    }
-    [data-testid="stMetricValue"] {
-        color: #f0f6fc !important;
-        font-family: 'JetBrains Mono', monospace !important;
-    }
-    
-    /* Tabs */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background-color: #161b22;
-        border-radius: 8px;
-        padding: 4px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        background-color: transparent;
-        color: #8b949e;
-        border-radius: 6px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.85rem;
-    }
-    .stTabs [aria-selected="true"] {
-        background-color: #1f6feb !important;
-        color: white !important;
-    }
-    
-    /* Dataframes */
-    [data-testid="stDataFrame"] {
-        border: 1px solid #30363d;
-        border-radius: 8px;
-    }
-    
-    /* Expanders */
-    [data-testid="stExpander"] {
-        background-color: #161b22;
-        border: 1px solid #30363d;
-        border-radius: 8px;
-    }
-    
-    /* Buttons */
-    .stButton > button {
-        background-color: #1f6feb;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 600;
-        transition: all 0.2s;
-    }
-    .stButton > button:hover {
-        background-color: #388bfd;
-        box-shadow: 0 0 15px rgba(31,111,235,0.3);
-    }
-    
-    /* Text input */
-    .stTextInput > div > div > input {
-        background-color: #0d1117;
-        border: 1px solid #30363d;
-        color: #c9d1d9;
-        border-radius: 6px;
-        font-family: 'JetBrains Mono', monospace;
-    }
-    
-    /* Status cards */
-    .status-card {
-        background: linear-gradient(135deg, #161b22 0%, #1c2333 100%);
-        border: 1px solid #30363d;
-        border-radius: 10px;
-        padding: 20px;
-        margin: 8px 0;
-    }
-    .status-card-green {
-        border-left: 4px solid #3fb950;
-    }
-    .status-card-red {
-        border-left: 4px solid #f85149;
-    }
-    .status-card-yellow {
-        border-left: 4px solid #d29922;
-    }
-    .status-card-blue {
-        border-left: 4px solid #58a6ff;
-    }
-    
-    /* Signal badge */
-    .signal-active {
-        background: #3fb950;
-        color: #0d1117;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-weight: 700;
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-    }
-    .signal-inactive {
-        background: #30363d;
-        color: #8b949e;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-weight: 600;
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-    }
-    .signal-warning {
-        background: #d29922;
-        color: #0d1117;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-weight: 700;
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-    }
-    
-    /* Mono text */
-    .mono {
-        font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    }
-    
-    /* Glow effect for important numbers */
-    .glow-green { color: #3fb950; text-shadow: 0 0 10px rgba(63,185,80,0.3); }
-    .glow-red { color: #f85149; text-shadow: 0 0 10px rgba(248,81,73,0.3); }
-    .glow-blue { color: #58a6ff; text-shadow: 0 0 10px rgba(88,166,255,0.3); }
-    
-    /* Hide streamlit branding */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    
-    /* Divider */
-    .section-divider {
-        border-top: 1px solid #30363d;
-        margin: 20px 0;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --bg-primary: #080C14;
+  --bg-surface: #0F1724;
+  --bg-elevated: #162035;
+  --bg-border: #1E2D45;
+  --accent-blue: #3B7DD8;
+  --accent-gold: #C9A84C;
+  --pass-green: #22C55E;
+  --fail-red: #EF4444;
+  --warn-amber: #F59E0B;
+  --text-primary: #E2E8F0;
+  --text-secondary: #94A3B8;
+  --text-muted: #475569;
+}
+
+.stApp { background-color: #080C14; }
+.block-container { padding-top: 1.5rem; padding-bottom: 0; max-width: 1400px; }
+body, p, div { color: #E2E8F0; font-family: 'Inter', sans-serif; }
+#MainMenu, footer, header { visibility: hidden; }
+
+/* Tab styling */
+.stTabs [data-baseweb="tab-list"] { background: #0F1724; border-bottom: 1px solid #1E2D45; gap: 0; padding: 0 1rem; }
+.stTabs [data-baseweb="tab"] { background: transparent; color: #64748B; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; padding: 12px 20px; border-bottom: 2px solid transparent; border-radius: 0; }
+.stTabs [aria-selected="true"] { background: transparent !important; color: #E2E8F0 !important; border-bottom: 2px solid #3B7DD8 !important; }
+.stTabs [data-baseweb="tab"]:hover { color: #94A3B8; background: #162035; }
+
+/* Button styling */
+.stButton > button { background: #1E3F6E; color: #93C5FD; border: 1px solid #2563EB; border-radius: 6px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; padding: 8px 20px; transition: all 0.15s; }
+.stButton > button:hover { background: #2563EB; color: #FFFFFF; border-color: #3B82F6; }
+
+/* Input styling */
+.stTextInput > div > div > input { background: #0F1724; border: 1px solid #1E2D45; border-radius: 6px; color: #E2E8F0; font-family: 'JetBrains Mono', monospace; font-size: 14px; padding: 10px 14px; }
+.stTextInput > div > div > input:focus { border-color: #3B7DD8; box-shadow: 0 0 0 2px rgba(59, 125, 216, 0.15); }
+
+/* Expander styling */
+[data-testid="stExpander"] { background: #0F1724; border: 1px solid #1E2D45; border-radius: 8px; }
+
+/* Dataframe styling */
+[data-testid="stDataFrame"] { border: 1px solid #1E2D45; border-radius: 8px; }
+
+/* Status cards (legacy inline HTML) */
+.status-card {
+    background: #0F1724;
+    border: 1px solid #1E2D45;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 8px 0;
+}
+.status-card-green { border-left: 4px solid #22C55E; }
+.status-card-red { border-left: 4px solid #EF4444; }
+.status-card-yellow { border-left: 4px solid #F59E0B; }
+.status-card-blue { border-left: 4px solid #3B7DD8; }
+
+/* Divider */
+.section-divider { border-top: 1px solid #1E2D45; margin: 20px 0; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -207,7 +104,7 @@ def _path(relative):
 # ---------------------------------------------------------------------------
 # DATA HELPERS
 # ---------------------------------------------------------------------------
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=900)
 def fetch_vix():
     """Fetch current VIX from yfinance."""
     try:
@@ -383,33 +280,512 @@ def get_fear_regime_status(vix, fg_score, spy_data):
 
 
 # ---------------------------------------------------------------------------
+# SECTION HEADER HELPER
+# ---------------------------------------------------------------------------
+def section_header(title, subtitle=""):
+    st.markdown(f"""<div style="padding:0 0 20px 0; border-bottom:1px solid #1E2D45; margin-bottom:24px;">
+        <div style="font-size:20px; font-weight:600; color:#E2E8F0; letter-spacing:-0.02em;">{title}</div>
+        {f'<div style="font-size:13px; color:#64748B; margin-top:4px;">{subtitle}</div>' if subtitle else ''}
+    </div>""", unsafe_allow_html=True)
+
+
+# ---------------------------------------------------------------------------
+# RENDER HELPERS  (presentation-layer only — no model logic)
+# ---------------------------------------------------------------------------
+
+def render_watchlist_table(watchlist_data, total_count=None, last_updated="—"):
+    """Return styled HTML for the crash watchlist table."""
+    count = total_count if total_count is not None else len(watchlist_data)
+
+    css = """<style>
+.wl-row:hover { background: #162035 !important; }
+</style>"""
+
+    strip = (
+        f'<div style="background:#0A1220; border:1px solid #1E2D45; border-radius:6px 6px 0 0; '
+        f'padding:8px 16px; display:flex; gap:20px; align-items:center; '
+        f'font-size:11px; font-family:\'JetBrains Mono\',monospace;">'
+        f'<span><span style="color:#475569; text-transform:uppercase; letter-spacing:0.08em;">Universe</span>'
+        f'&nbsp;<span style="color:#94A3B8;">{count} tickers</span></span>'
+        f'<span style="color:#1E2D45;">&middot;</span>'
+        f'<span><span style="color:#475569; text-transform:uppercase; letter-spacing:0.08em;">Source</span>'
+        f'&nbsp;<span style="color:#94A3B8;">watchlist.txt</span></span>'
+        f'<span style="color:#1E2D45;">&middot;</span>'
+        f'<span><span style="color:#475569; text-transform:uppercase; letter-spacing:0.08em;">Last Updated</span>'
+        f'&nbsp;<span style="color:#94A3B8;">{last_updated}</span></span>'
+        f'</div>'
+    )
+
+    th_s = ("padding:8px 12px; font-size:11px; font-weight:600; letter-spacing:0.08em; "
+            "text-transform:uppercase; color:#475569; background:#0F1724; "
+            "border-bottom:1px solid #1E2D45; text-align:left;")
+    thead = "".join(
+        f'<th style="{th_s}">{h}</th>'
+        for h in ["TICKER", "NAME", "PRICE", "OFF HIGH", "VS EMA50",
+                  "KEY FILTERS", "SCORE", "CONVICTION", "ACTION"]
+    )
+
+    def _score_badge(s):
+        if not s or s == "---":
+            return '<span style="color:#475569; font-family:\'JetBrains Mono\',monospace;">—</span>'
+        m = re.match(r'(\d+)/(\d+)', s)
+        if not m:
+            return f'<span style="color:#64748B; font-size:12px;">{s}</span>'
+        n = int(m.group(1))
+        bg, fg = ("#052E16", "#22C55E") if n >= 11 else (("#1A1A2D", "#94A3B8") if n >= 8 else ("#2D0A0A", "#EF4444"))
+        return (f'<span style="background:{bg}; color:{fg}; font-size:11px; font-weight:600; '
+                f'font-family:\'JetBrains Mono\',monospace; padding:3px 8px; border-radius:4px;">{s}</span>')
+
+    def _conviction_badge(c):
+        cu = c.upper()
+        if cu == "HIGH":
+            return ('<span style="color:#22C55E; border:1px solid #22C55E; font-size:11px; font-weight:600; '
+                    'padding:2px 8px; border-radius:4px; font-family:\'JetBrains Mono\',monospace;">HIGH</span>')
+        if cu == "MEDIUM":
+            return ('<span style="color:#3B7DD8; border:1px solid #3B7DD8; font-size:11px; font-weight:600; '
+                    'padding:2px 8px; border-radius:4px; font-family:\'JetBrains Mono\',monospace;">MEDIUM</span>')
+        if "DO NOT" in cu or "ENTER" in cu:
+            return ('<span style="color:#EF4444; border:1px solid #EF4444; font-size:11px; font-weight:600; '
+                    'padding:2px 8px; border-radius:4px; font-family:\'JetBrains Mono\',monospace;">NO ENTRY</span>')
+        return f'<span style="color:#475569; font-size:11px;">{c}</span>'
+
+    def _action_cell(a):
+        au = a.upper()
+        if "SIGNAL" in au and "NEAR" not in au:
+            return '<span style="color:#22C55E; font-weight:700; font-size:12px;">SIGNAL</span>'
+        if "NEAR" in au:
+            return '<span style="color:#F59E0B; font-weight:600; font-size:12px;">Near Signal</span>'
+        if "WATCH" in au:
+            return '<span style="color:#94A3B8; font-size:12px;">Watch</span>'
+        if "WAIT" in au:
+            return '<span style="color:#475569; font-size:12px;">Wait</span>'
+        return f'<span style="color:#475569; font-style:italic; font-size:12px;">{a}</span>'
+
+    def _filters_cell(fs):
+        out = []
+        for p in fs.split():
+            if "✅" in p:
+                name = p.replace("✅", "")
+                out.append(f'<span style="color:#22C55E; font-size:11px; font-weight:600; '
+                           f'margin-right:6px; font-family:\'JetBrains Mono\',monospace;">{name}&thinsp;PASS</span>')
+            elif "❌" in p:
+                name = p.replace("❌", "")
+                out.append(f'<span style="color:#EF4444; font-size:11px; font-weight:600; '
+                           f'margin-right:6px; font-family:\'JetBrains Mono\',monospace;">{name}&thinsp;FAIL</span>')
+            else:
+                out.append(f'<span style="color:#475569; font-size:11px;">{p}</span>')
+        return "".join(out)
+
+    td_s = "padding:9px 12px; border-bottom:1px solid #0D1A2D; vertical-align:middle;"
+    rows = ""
+    for row in watchlist_data:
+        off_h = row.get("Off High", "")
+        try:
+            oh_num = float(off_h.replace("%", ""))
+            oh_color = "#EF4444" if oh_num < 0 else "#22C55E"
+        except Exception:
+            oh_color = "#CBD5E1"
+        rows += (
+            f'<tr class="wl-row" style="background:#080C14;">'
+            f'<td style="{td_s} color:#E2E8F0; font-weight:700; font-size:13px;">{row.get("Ticker","")}</td>'
+            f'<td style="{td_s} color:#64748B; font-size:12px; max-width:130px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{row.get("Name","")}</td>'
+            f'<td style="{td_s} font-family:\'JetBrains Mono\',monospace; font-size:13px; color:#CBD5E1;">{row.get("Price","")}</td>'
+            f'<td style="{td_s} font-family:\'JetBrains Mono\',monospace; font-size:13px; color:{oh_color};">{off_h}</td>'
+            f'<td style="{td_s} font-family:\'JetBrains Mono\',monospace; font-size:13px; color:#CBD5E1;">{row.get("vs EMA50","")}</td>'
+            f'<td style="{td_s}">{_filters_cell(row.get("Key Filters",""))}</td>'
+            f'<td style="{td_s}">{_score_badge(row.get("Score","---"))}</td>'
+            f'<td style="{td_s}">{_conviction_badge(row.get("Conviction",""))}</td>'
+            f'<td style="{td_s}">{_action_cell(row.get("Action",""))}</td>'
+            f'</tr>'
+        )
+
+    table = (
+        f'<table style="width:100%; border-collapse:collapse; background:#080C14; '
+        f'border:1px solid #1E2D45; border-top:none; border-radius:0 0 8px 8px;">'
+        f'<thead><tr>{thead}</tr></thead>'
+        f'<tbody>{rows}</tbody></table>'
+    )
+    return css + strip + table
+
+
+def render_diagnose_report(text):
+    """Parse diagnose.py stdout and return a structured HTML report card."""
+    if not text or not text.strip():
+        return '<div style="padding:20px; color:#475569; font-style:italic;">No diagnose output to display.</div>'
+
+    lines = text.splitlines()
+
+    ticker = company = sector = price = high_52w = date_str = vix_str = spy_str = ""
+    sub_checks = {}   # id → {label, passed, values}
+    current_id = None
+    group_pass = {}   # F1..F12 → True/False/None
+    failing_groups = []
+    na_groups = []
+    conviction = ""
+    n_groups_pass_str = ""
+    insider_lines = []
+    trigger_lines = []
+
+    # State machine matching _print_research_report output structure
+    # ════ #1 → header_name | ════ #2 → header_context | ════ #3 → filters
+    # INSIDER ACTIVITY → insider | ════ #4 → verdict | TRIGGER/NEXT ACTION → triggers
+    section = "pre"
+
+    for line in lines:
+        stripped = line.strip()
+        is_double = bool(re.fullmatch(r'[═]+', stripped)) and len(stripped) > 10
+        is_single = bool(re.fullmatch(r'[─]+', stripped)) and len(stripped) > 10
+
+        if is_double:
+            if section == "pre":
+                section = "header_name"
+            elif section == "header_name":
+                section = "header_context"
+            elif section == "header_context":
+                section = "filters"
+            elif section in ("filters", "insider"):
+                section = "verdict"
+            # closing ════ after verdict → ignore
+            continue
+
+        if is_single:
+            continue
+
+        # ── Header name block (ticker · company · sector) ──
+        if section == "header_name":
+            if not stripped:
+                continue
+            if '·' in stripped:
+                parts = [p.strip() for p in stripped.split('·')]
+                ticker = parts[0].strip()
+                company = parts[1].strip() if len(parts) > 1 else ""
+                sector = parts[2].strip() if len(parts) > 2 else ""
+            elif not ticker:
+                ticker = stripped.split()[0] if stripped.split() else ""
+            continue
+
+        # ── Header context block (price, vix, date) ──
+        if section == "header_context":
+            if not stripped:
+                continue
+            m = re.search(r'Price\s+(\$[\d.,]+)', stripped)
+            if m: price = m.group(1)
+            m = re.search(r'52w High\s+(\$[\d.,]+)', stripped)
+            if m: high_52w = m.group(1)
+            m = re.search(r'VIX\s+([\d.]+)', stripped)
+            if m: vix_str = f"VIX {m.group(1)}"
+            m = re.search(r'SPY\s+([\S]+)\s+off peak', stripped)
+            if m: spy_str = f"SPY {m.group(1)} off peak"
+            m = re.search(r'As of:\s*(\S+)', stripped)
+            if m: date_str = m.group(1)
+            continue
+
+        # ── Filter sections ──
+        if section == "filters":
+            if not stripped:
+                continue
+            # Detect insider section transition
+            if 'INSIDER ACTIVITY' in stripped.upper():
+                section = "insider"
+                current_id = None
+                continue
+            # Skip section titles
+            if 'QUALITY FILTERS' in stripped.upper() or 'ENTRY TIMING FILTERS' in stripped.upper():
+                current_id = None
+                continue
+            # F8/F9 explicit group notes:  "  F8 group (2-of-4 required): PASS"
+            gm = re.match(r'\s*(F\d+)\s+group\s+\([^)]+\):\s*(PASS|FAIL|N/A)', line)
+            if gm:
+                gv = gm.group(2).strip()
+                group_pass[gm.group(1)] = (True if gv == 'PASS' else (None if gv == 'N/A' else False))
+                continue
+            # Filter row: split on 3+ dots (dots fill label → PASS/FAIL/N/A)
+            dot_parts = re.split(r'\.{3,}', stripped, maxsplit=1)
+            if len(dot_parts) == 2:
+                left, right = dot_parts[0].strip(), dot_parts[1].strip()
+                if right in ('PASS', 'FAIL', 'N/A'):
+                    m = re.match(r'(F\d+[a-z]?)\s+(.*)', left)
+                    if m:
+                        fid = m.group(1)
+                        flabel = m.group(2).strip()
+                        fpassed = True if right == 'PASS' else (None if right == 'N/A' else False)
+                        sub_checks[fid] = {'label': flabel, 'passed': fpassed, 'values': []}
+                        current_id = fid
+                        continue
+            # Value lines (6-space indent from _val helper)
+            if line.startswith('      ') and current_id and stripped:
+                sub_checks[current_id]['values'].append(stripped)
+            continue
+
+        # ── Insider section ──
+        if section == "insider":
+            if stripped:
+                insider_lines.append(stripped)
+            continue
+
+        # ── Verdict section ──
+        if section == "verdict":
+            if not stripped:
+                continue
+            m = re.search(r'PASSES\s+\d+\s+of\s+\d+.*?\((\d+)\s+of\s+12', stripped, re.IGNORECASE)
+            if m: n_groups_pass_str = f"{m.group(1)}/12"
+            m = re.search(r'CONVICTION:\s+(.+)', stripped, re.IGNORECASE)
+            if m: conviction = m.group(1).strip()
+            m = re.search(r'Failing filters:\s+(.+)', stripped, re.IGNORECASE)
+            if m: failing_groups = [f.strip() for f in m.group(1).split(',')]
+            m = re.search(r'Insufficient data:\s+(.+)', stripped, re.IGNORECASE)
+            if m: na_groups = [f.strip() for f in m.group(1).split(',')]
+            if stripped.upper() == 'TRIGGER' or 'NEXT ACTION:' in stripped.upper():
+                section = 'triggers'
+            continue
+
+        # ── Triggers section ──
+        if section == "triggers":
+            if stripped and not re.fullmatch(r'[═]+', stripped):
+                if 'NEXT ACTION:' not in stripped.upper() and stripped.upper() != 'TRIGGER':
+                    trigger_lines.append(stripped)
+            continue
+
+    # ── Derive group pass/fail from sub-checks where not explicitly stated ──
+    _sub_ids = {
+        'F1': ['F1a', 'F1b'], 'F2': ['F2a', 'F2b'],
+        'F3': ['F3'], 'F4': ['F4'], 'F5': ['F5'], 'F6': ['F6'], 'F7': ['F7'],
+        'F8': ['F8a', 'F8b', 'F8c', 'F8d'], 'F9': ['F9a', 'F9b'],
+        'F10': ['F10'], 'F11': ['F11'], 'F12': ['F12'],
+    }
+    _logic = {
+        'F1': 'lenient_all', 'F2': 'lenient_all',
+        'F3': 'all', 'F4': 'all', 'F5': 'all', 'F6': 'all', 'F7': 'all',
+        'F8': 'two_or_more', 'F9': 'any',
+        'F10': 'all', 'F11': 'all', 'F12': 'all',
+    }
+    for g, ids in _sub_ids.items():
+        if g in group_pass:
+            continue
+        vals = [sub_checks[i]['passed'] for i in ids if i in sub_checks]
+        if not vals:
+            group_pass[g] = None
+            continue
+        logi = _logic.get(g, 'all')
+        if logi == 'two_or_more':
+            n_t = sum(1 for v in vals if v is True)
+            n_k = sum(1 for v in vals if v is not None)
+            group_pass[g] = True if n_t >= 2 else (None if n_k == 0 else False)
+        elif logi == 'any':
+            group_pass[g] = True if any(v is True for v in vals) else (None if all(v is None for v in vals) else False)
+        elif logi == 'lenient_all':
+            group_pass[g] = False if any(v is False for v in vals) else (True if any(v is True for v in vals) else None)
+        else:  # all
+            group_pass[g] = True if all(v is True for v in vals) else (False if any(v is False for v in vals) else None)
+
+    # Override with explicit failing/na from verdict block
+    for g in failing_groups:
+        if g in _sub_ids:
+            group_pass[g] = False
+    for g in na_groups:
+        if g in _sub_ids and g not in group_pass:
+            group_pass[g] = None
+
+    # ── F6 display label fix (task requirement 3) ──
+    if 'F6' not in sub_checks:
+        sub_checks['F6'] = {
+            'label': 'Valuation', 'passed': None,
+            'values': ['Insufficient data from SimFin'],
+            '_f6_disp': 'Valuation',
+        }
+    else:
+        lbl_up = sub_checks['F6']['label'].upper()
+        if 'PEG N/A' in lbl_up or ('PEG' in lbl_up and 'N/A' in lbl_up and 'UNAVAILABLE' in lbl_up):
+            sub_checks['F6']['_f6_disp'] = 'Valuation (P/S <15 + Growth >30%)'
+        elif 'PEG' in lbl_up and 'N/A' not in lbl_up:
+            sub_checks['F6']['_f6_disp'] = 'PEG Ratio <2.0'
+        elif 'P/S' in lbl_up or 'PRE-PROFITABLE' in lbl_up:
+            sub_checks['F6']['_f6_disp'] = 'Valuation (P/S <15 + Growth >30%)'
+        else:
+            sub_checks['F6']['_f6_disp'] = sub_checks['F6']['label']
+
+    # ── Conviction display ──
+    cu = conviction.upper()
+    if 'HIGH' in cu:
+        v_color, v_label = '#22C55E', 'HIGH CONVICTION'
+    elif 'MEDIUM' in cu:
+        v_color, v_label = '#3B7DD8', 'MEDIUM'
+    elif 'DO NOT' in cu or 'ENTER' in cu:
+        v_color, v_label = '#EF4444', 'DO NOT ENTER'
+    else:
+        v_color, v_label = '#94A3B8', (conviction or 'UNKNOWN')
+
+    if not n_groups_pass_str:
+        n_gp = sum(1 for v in group_pass.values() if v is True)
+        n_groups_pass_str = f"{n_gp}/12"
+
+    actual_fail = [g for g, v in sorted(group_pass.items()) if v is False]
+    fail_list = actual_fail if actual_fail else failing_groups
+    failing_html = ""
+    if fail_list:
+        spans = " &middot; ".join(
+            f'<span style="color:#EF4444; font-family:\'JetBrains Mono\',monospace; font-size:12px;">{f}</span>'
+            for f in fail_list
+        )
+        failing_html = f'<div style="margin-top:6px; font-size:12px; color:#64748B;">Failing: {spans}</div>'
+
+    # ── Filter row builder ──
+    def _frow(gid, ids):
+        subs = [(i, sub_checks[i]) for i in ids if i in sub_checks]
+        gp = group_pass.get(gid)
+        border = '#22C55E' if gp is True else ('#EF4444' if gp is False else '#475569')
+        bb, bc = ('#052E16', '#22C55E') if gp is True else (('#2D0A0A', '#EF4444') if gp is False else ('#1A1A2D', '#94A3B8'))
+        badge = 'PASS' if gp is True else ('FAIL' if gp is False else 'N/A')
+
+        # Main label
+        _lbl_map = {
+            'F1': 'Revenue Growth >15% YoY',
+            'F2': 'Gross Margin >40%',
+            'F8': 'Fear Regime (2 of 4 conditions)',
+            'F9': 'Price Dislocation (1 of 2)',
+        }
+        if len(ids) == 1 and subs:
+            sid, sc_data = subs[0]
+            main_lbl = sc_data.get('_f6_disp', sc_data.get('label', gid)) if sid == 'F6' else sc_data.get('label', gid)
+        else:
+            main_lbl = _lbl_map.get(gid, gid)
+
+        # Sub-check detail lines
+        detail = ""
+        for sid, sc_data in subs:
+            sp = sc_data.get('passed')
+            sc_c = '#22C55E' if sp is True else ('#EF4444' if sp is False else '#64748B')
+            si = '✓' if sp is True else ('✗' if sp is False else '—')
+            vals = sc_data.get('values', [])
+            if len(ids) > 1:
+                sub_lbl = sc_data.get('_f6_disp', sc_data.get('label', sid)) if sid == 'F6' else sc_data.get('label', sid)
+                detail += (f'<div style="font-size:11px; color:{sc_c}; padding-left:8px; margin-top:3px;">'
+                           f'{si} {sub_lbl}</div>')
+            if vals:
+                detail += (f'<div style="font-family:\'JetBrains Mono\',monospace; font-size:11px; '
+                           f'color:#475569; padding-left:8px; margin-top:1px; white-space:pre-wrap;">{vals[0]}</div>')
+
+        return (
+            f'<div style="display:flex; flex-direction:column; padding:10px 16px; '
+            f'border-left:3px solid {border}; margin-bottom:3px; background:#0F1724; border-radius:0 4px 4px 0;">'
+            f'<div style="display:flex; align-items:center;">'
+            f'<div style="width:40px; font-family:\'JetBrains Mono\',monospace; font-size:12px; font-weight:700; color:#64748B; flex-shrink:0;">{gid}</div>'
+            f'<div style="flex:1; font-size:13px; color:#CBD5E1;">{main_lbl}</div>'
+            f'<span style="background:{bb}; color:{bc}; font-size:10px; font-weight:700; padding:2px 8px; '
+            f'border-radius:4px; letter-spacing:0.06em; font-family:\'JetBrains Mono\',monospace; flex-shrink:0;">{badge}</span>'
+            f'</div>{detail}</div>'
+        )
+
+    # ── Insider ──
+    if insider_lines:
+        ins_html = '<br>'.join(
+            f'<span style="font-family:\'JetBrains Mono\',monospace; font-size:12px; color:#CBD5E1;">{l}</span>'
+            for l in insider_lines
+        )
+    else:
+        ins_html = '<span style="font-style:italic; color:#475569; font-size:13px;">No open-market insider purchases found in the last 90 days.</span>'
+
+    # ── Triggers ──
+    if trigger_lines:
+        trig_parts = []
+        for tl_item in trigger_lines:
+            m = re.match(r'(F\d+)\s+→\s+(.*)', tl_item)
+            if m:
+                trig_parts.append(
+                    f'<div style="padding:8px 0; border-bottom:1px solid #1E2D45; display:flex; gap:12px;">'
+                    f'<span style="font-family:\'JetBrains Mono\',monospace; font-size:12px; font-weight:700; '
+                    f'color:#F59E0B; min-width:32px; flex-shrink:0;">{m.group(1)}</span>'
+                    f'<span style="font-size:13px; color:#CBD5E1;">{m.group(2).strip()}</span>'
+                    f'</div>'
+                )
+            else:
+                trig_parts.append(f'<div style="padding:6px 0; font-size:13px; color:#CBD5E1;">{tl_item}</div>')
+        trig_html = "".join(trig_parts)
+    else:
+        trig_html = '<span style="font-style:italic; color:#475569; font-size:13px;">No trigger conditions — all entry filters passing or none parsed.</span>'
+
+    # ── Header meta ──
+    meta_parts = []
+    if price:
+        meta_parts.append(f'Price: <span style="color:#E2E8F0; font-family:\'JetBrains Mono\',monospace;">{price}</span>')
+    if high_52w:
+        meta_parts.append(f'52W High: <span style="color:#E2E8F0; font-family:\'JetBrains Mono\',monospace;">{high_52w}</span>')
+    if vix_str:
+        meta_parts.append(f'<span style="color:#64748B;">{vix_str}</span>')
+    if spy_str:
+        meta_parts.append(f'<span style="color:#64748B;">{spy_str}</span>')
+    if date_str:
+        meta_parts.append(f'<span style="color:#475569; font-size:11px;">As of {date_str}</span>')
+    meta_html = "".join(f'<div>{p}</div>' for p in meta_parts)
+
+    quality_rows = "".join(_frow(g, _sub_ids[g]) for g in ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7'])
+    entry_rows = "".join(_frow(g, _sub_ids[g]) for g in ['F8', 'F9', 'F10', 'F11', 'F12'])
+    company_sector = (company or '') + ('&nbsp;&nbsp;&middot;&nbsp;&nbsp;' + sector if sector else '')
+
+    return f"""<div style="border:1px solid #1E2D45; border-radius:8px; overflow:hidden; margin-top:16px;">
+
+  <div style="background:#0F1724; padding:20px 24px; border-bottom:1px solid #1E2D45; display:flex; justify-content:space-between; align-items:flex-start;">
+    <div>
+      <div style="font-size:22px; font-weight:700; color:#E2E8F0; letter-spacing:-0.02em; font-family:'JetBrains Mono',monospace;">{ticker or '—'}</div>
+      <div style="font-size:14px; color:#64748B; margin-top:4px;">{company_sector}</div>
+    </div>
+    <div style="text-align:right; font-size:12px; color:#64748B; line-height:2.0;">{meta_html}</div>
+  </div>
+
+  <div style="background:#0F1724; padding:16px 24px; border-bottom:1px solid #1E2D45; display:flex; justify-content:space-between; align-items:center;">
+    <div>
+      <div style="font-size:18px; font-weight:700; color:{v_color}; letter-spacing:0.04em;">{v_label}</div>
+      {failing_html}
+    </div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:32px; font-weight:500; color:#C9A84C;">{n_groups_pass_str}</div>
+  </div>
+
+  <div style="background:#080C14; padding:16px 24px; border-bottom:1px solid #1E2D45;">
+    <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#475569; margin-bottom:10px;">Quality Filters F1–F7</div>
+    {quality_rows}
+  </div>
+
+  <div style="background:#080C14; padding:16px 24px; border-bottom:1px solid #1E2D45;">
+    <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#475569; margin-bottom:10px;">Entry Filters F8–F12</div>
+    {entry_rows}
+  </div>
+
+  <div style="background:#080C14; padding:16px 24px; border-bottom:1px solid #1E2D45;">
+    <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#475569; margin-bottom:10px;">Insider Activity (Last 90 Days)</div>
+    <div style="line-height:1.8;">{ins_html}</div>
+  </div>
+
+  <div style="background:#080C14; padding:16px 24px; border-radius:0 0 8px 8px;">
+    <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#475569; margin-bottom:10px;">Trigger Conditions</div>
+    {trig_html}
+  </div>
+
+</div>"""
+
+
+# ---------------------------------------------------------------------------
 # HEADER
 # ---------------------------------------------------------------------------
-col_title, col_time = st.columns([3, 1])
-with col_title:
-    st.markdown("""
-    <h1 style='margin-bottom:0; font-size:1.8rem;'>\u26A1 HIGH-CONVICTION COMMAND CENTER</h1>
-    <p style='color:#8b949e; font-family: monospace; font-size:0.85rem; margin-top:4px;'>
-    QVM Rotation + Crash Override | SP900 Universe | Live Monitoring
-    </p>
-    """, unsafe_allow_html=True)
-with col_time:
-    st.markdown(f"""
-    <div style='text-align:right; padding-top:12px;'>
-        <span style='color:#8b949e; font-family:monospace; font-size:0.8rem;'>
-        {datetime.now().strftime('%B %d, %Y | %I:%M %p')}
-        </span>
+st.markdown(f"""
+<div style="display:flex; align-items:flex-start; justify-content:space-between; padding:8px 0 16px 0; border-bottom:1px solid #1E2D45; margin-bottom:20px;">
+  <div>
+    <div style="font-size:22px; font-weight:700; color:#E2E8F0; letter-spacing:-0.02em; line-height:1.2;">
+      <span style="color:#C9A84C;">&#9889;</span> HIGH-CONVICTION COMMAND CENTER
     </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
+    <div style="font-size:13px; color:#475569; margin-top:6px; letter-spacing:0.02em;">
+      SP900 Universe &middot; QVM Rotation &middot; Crash Override &middot; Live
+    </div>
+  </div>
+  <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#475569; text-align:right; padding-top:4px; white-space:nowrap;">
+    {datetime.now().strftime('%b %d, %Y &nbsp;|&nbsp; %I:%M %p')}
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------------------------
 # MARKET STATUS BAR
 # ---------------------------------------------------------------------------
-st.markdown("### \U0001F4CA Market Status")
-
 vix = fetch_vix()
 fg_data = fetch_fear_greed()
 spy_data = fetch_spy_data()
@@ -417,135 +793,209 @@ fg_score = fg_data['score'] if fg_data else None
 
 conditions_met, fear_details = get_fear_regime_status(vix, fg_score, spy_data)
 
+# Compute QVM P&L — mirrors the same fallback logic used in the Portfolio tab.
+# If the saved file exists use it; otherwise fall back to the hardcoded defaults
+# so the card always shows live P&L even before the user clicks "Save Positions".
+_QVM_DEFAULTS = {
+    'Ticker':        ['CF', 'MU', 'INCY', 'GOOGL', 'WDC', 'LRCX', 'PTC', 'ARES', 'MSFT', 'MNST'],
+    'Shares':        [3, 1, 3, 1, 1, 1, 2, 3, 1, 4],
+    'Entry Price':   [112.93, 453.55, 97.40, 338.49, 372.16, 267.13, 139.73, 116.98, 421.23, 76.59],
+}
+
+qvm_pos_file = _path('data_cache/qvm_positions.csv')
+qvm_total_pnl_pct = 0.0
+qvm_total_pnl_dollar = 0.0
+qvm_total_cost = 0.0
+qvm_total_value = 0.0
+qvm_has_data = False
+try:
+    if os.path.exists(qvm_pos_file):
+        qvm_pos = pd.read_csv(qvm_pos_file)
+    else:
+        qvm_pos = pd.DataFrame(_QVM_DEFAULTS)
+    for _, row in qvm_pos.iterrows():
+        ticker = str(row.get('Ticker', '')).strip()
+        try:
+            entry = float(row.get('Entry Price', 0) or 0)
+            shares = float(row.get('Shares', 0) or 0)
+        except (TypeError, ValueError):
+            entry, shares = 0.0, 0.0
+        if entry > 0 and shares > 0 and ticker:
+            sd = fetch_stock_data(ticker)
+            if sd:
+                qvm_total_cost += entry * shares
+                qvm_total_value += sd['price'] * shares
+    if qvm_total_cost > 0:
+        qvm_total_pnl_dollar = qvm_total_value - qvm_total_cost
+        qvm_total_pnl_pct = (qvm_total_pnl_dollar / qvm_total_cost) * 100
+        qvm_has_data = True
+except Exception as _e:
+    print(f"[QVM P&L] Error: {_e}")
+
+# Compute Crash P&L from live crash positions only (not backtest trade log)
+crash_pnl_pct = 0
+crash_pnl_dollar = 0
+crash_has_data = False
+crash_pos_file = _path('data_cache/crash_positions.csv')
+if os.path.exists(crash_pos_file):
+    try:
+        crash_pos = pd.read_csv(crash_pos_file)
+        crash_cost, crash_value = 0.0, 0.0
+        for _, row in crash_pos.iterrows():
+            ticker = str(row.get('Ticker', '')).strip()
+            entry = row.get('Entry Price', 0)
+            shares = row.get('Shares', 0)
+            try:
+                entry = float(entry)
+                shares = float(shares)
+            except (TypeError, ValueError):
+                entry, shares = 0, 0
+            if entry > 0 and shares > 0 and ticker:
+                sd = fetch_stock_data(ticker)
+                if sd:
+                    crash_cost += entry * shares
+                    crash_value += sd['price'] * shares
+        if crash_cost > 0:
+            crash_pnl_dollar = crash_value - crash_cost
+            crash_pnl_pct = (crash_pnl_dollar / crash_cost) * 100
+            crash_has_data = True
+    except Exception as _e:
+        print(f"[Crash P&L] Error: {_e}")
+
+def _card(label, value, sub=""):
+    sub_html = f'<div style="font-size:12px; color:#64748B; font-family:\'JetBrains Mono\',monospace;">{sub}</div>' if sub else ''
+    return f"""<div style="background:#0F1724; border:1px solid #1E2D45; border-radius:8px; padding:16px 20px; min-width:160px;">
+  <div style="font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#475569; margin-bottom:8px;">{label}</div>
+  <div style="font-family:'JetBrains Mono',monospace; font-size:28px; font-weight:500; color:#E2E8F0; white-space:nowrap;">{value}</div>
+  {sub_html}
+</div>"""
+
 col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
 
 with col1:
-    if vix is not None:
-        vix_color = "normal" if vix < 20 else ("inverse" if vix > 25 else "off")
-        st.metric("VIX", f"{vix}", delta=f"{'ELEVATED' if vix > 25 else 'CALM'}", delta_color=vix_color)
-    else:
-        st.metric("VIX", "N/A")
+    vix_val = f"{vix}" if vix is not None else "N/A"
+    vix_sub = "ELEVATED" if (vix and vix > 25) else ("CALM" if vix else "")
+    st.markdown(_card("VIX", vix_val, vix_sub), unsafe_allow_html=True)
 
 with col2:
-    if fg_data:
-        fg_label = fg_data.get('rating', 'Unknown')
-        delta_color = "inverse" if fg_score < 35 else ("off" if fg_score < 50 else "normal")
-        st.metric("Fear & Greed", f"{fg_score}", delta=fg_label, delta_color=delta_color)
-    else:
-        st.metric("Fear & Greed", "N/A")
+    fg_val = f"{fg_score}" if fg_data else "N/A"
+    fg_sub = fg_data.get('rating', '') if fg_data else ""
+    st.markdown(_card("Fear &amp; Greed", fg_val, fg_sub), unsafe_allow_html=True)
 
 with col3:
-    if spy_data:
-        st.metric("SPY", f"${spy_data['price']}", delta=f"{spy_data['off_high']}% off high", 
-                  delta_color="inverse" if spy_data['off_high'] < -5 else "normal")
-    else:
-        st.metric("SPY", "N/A")
+    spy_val = f"${spy_data['price']}" if spy_data else "N/A"
+    spy_sub = f"{spy_data['off_high']}% off high" if spy_data else ""
+    st.markdown(_card("SPY", spy_val, spy_sub), unsafe_allow_html=True)
 
 with col4:
-    if spy_data:
-        st.metric("SPY vs 200d EMA", f"{spy_data['vs_ema200']}%", 
-                  delta=f"EMA: ${spy_data['ema200']}", delta_color="off")
-    else:
-        st.metric("SPY vs 200d", "N/A")
+    spy200_val = f"{spy_data['vs_ema200']}%" if spy_data else "N/A"
+    spy200_sub = f"EMA ${spy_data['ema200']}" if spy_data else ""
+    st.markdown(_card("SPY vs 200d", spy200_val, spy200_sub), unsafe_allow_html=True)
 
-# QVM Portfolio P&L
 with col5:
-    qvm_pos_file = _path('data_cache/qvm_positions.csv')
-    qvm_total_pnl_pct = 0
-    qvm_total_pnl_dollar = 0
-    qvm_total_cost = 0
-    qvm_total_value = 0
-    qvm_has_data = False
-    if os.path.exists(qvm_pos_file):
-        try:
-            qvm_pos = pd.read_csv(qvm_pos_file)
-            for _, row in qvm_pos.iterrows():
-                entry = row.get('Entry Price', 0)
-                shares = row.get('Shares', 0)
-                if entry > 0 and shares > 0:
-                    sd = fetch_stock_data(row['Ticker'])
-                    if sd:
-                        cost = entry * shares
-                        val = sd['price'] * shares
-                        qvm_total_cost += cost
-                        qvm_total_value += val
-            if qvm_total_cost > 0:
-                qvm_total_pnl_dollar = qvm_total_value - qvm_total_cost
-                qvm_total_pnl_pct = (qvm_total_pnl_dollar / qvm_total_cost) * 100
-                qvm_has_data = True
-        except:
-            pass
-    
-    if qvm_has_data:
-        st.metric("QVM P&L", f"{qvm_total_pnl_pct:+.2f}%",
-                  delta=f"${qvm_total_pnl_dollar:+,.2f}",
-                  delta_color="normal" if qvm_total_pnl_dollar >= 0 else "inverse")
-    else:
-        st.metric("QVM P&L", "---", delta="Set entry prices")
+    qvm_val = f"{qvm_total_pnl_pct:+.2f}%" if qvm_has_data else "---"
+    qvm_sub = f"${qvm_total_pnl_dollar:+,.0f}" if qvm_has_data else "Set entry prices"
+    st.markdown(_card("QVM P&amp;L", qvm_val, qvm_sub), unsafe_allow_html=True)
 
-# Crash Tier P&L
 with col6:
-    # Pull from trade log for active crash positions
-    crash_pnl_pct = 0
-    crash_pnl_dollar = 0
-    crash_has_data = False
-    trade_log_file = None
-    for p in [_path('output/trade_log_sp900_combined.csv'), _path('output/trade_log_sp500_combined.csv')]:
-        if os.path.exists(p):
-            trade_log_file = p
-            break
-    if trade_log_file:
-        try:
-            tl = pd.read_csv(trade_log_file)
-            crash_trades = tl[(tl['tier'] == 'crash') & (tl['return_pct'].notna())]
-            if not crash_trades.empty:
-                crash_pnl_pct = crash_trades['return_pct'].mean()
-                crash_pnl_dollar = crash_trades['pnl_dollars'].sum() if 'pnl_dollars' in crash_trades.columns else 0
-                crash_has_data = True
-        except:
-            pass
-    
-    if crash_has_data:
-        st.metric("Crash P&L", f"{crash_pnl_pct:+.1f}% avg",
-                  delta=f"${crash_pnl_dollar:+,.0f} total",
-                  delta_color="normal" if crash_pnl_pct >= 0 else "inverse")
-    else:
-        st.metric("Crash P&L", "---", delta="No crash trades")
+    crash_val = f"{crash_pnl_pct:+.1f}%" if crash_has_data else "---"
+    crash_sub = f"${crash_pnl_dollar:+,.0f} total" if crash_has_data else "No active trades"
+    st.markdown(_card("Crash P&amp;L", crash_val, crash_sub), unsafe_allow_html=True)
 
 with col7:
     if conditions_met >= 2:
-        status_html = "<span class='signal-active'>FEAR REGIME ACTIVE</span>"
+        f8_val = "ACTIVE"
+        f8_color = "#EF4444"
     elif conditions_met == 1:
-        status_html = "<span class='signal-warning'>ELEVATED CAUTION</span>"
+        f8_val = "CAUTION"
+        f8_color = "#F59E0B"
     else:
-        status_html = "<span class='signal-inactive'>MARKET CALM</span>"
-    
-    st.markdown(f"""
-    <div style='text-align:center; padding-top:8px;'>
-        <p style='color:#8b949e; font-size:0.75rem; margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;'>F8 Status ({conditions_met}/4)</p>
-        {status_html}
-    </div>
-    """, unsafe_allow_html=True)
+        f8_val = "CALM"
+        f8_color = "#22C55E"
+    st.markdown(f"""<div style="background:#0F1724; border:1px solid #1E2D45; border-radius:8px; padding:16px 20px; min-width:160px;">
+  <div style="font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#475569; margin-bottom:8px;">F8 Status</div>
+  <div style="font-family:'JetBrains Mono',monospace; font-size:28px; font-weight:500; color:{f8_color}; white-space:nowrap;">{f8_val}</div>
+  <div style="font-size:12px; color:#64748B; font-family:'JetBrains Mono',monospace;">{conditions_met}/4 conditions</div>
+</div>""", unsafe_allow_html=True)
 
-# Fear regime detail expander
-with st.expander("F8 Fear Regime Details"):
-    for detail in fear_details:
-        st.markdown(f"`{detail}`")
-    st.markdown(f"**Conditions met: {conditions_met}/4** (need 2 for crash-tier activation)")
+# F8 status strip
+if conditions_met >= 2:
+    _f8_bg, _f8_border = "#2D0A0A", "#7F1D1D"
+    _f8_status = "FEAR REGIME ACTIVE"
+elif conditions_met == 1:
+    _f8_bg, _f8_border = "#2D1A00", "#92400E"
+    _f8_status = "ELEVATED CAUTION"
+else:
+    _f8_bg, _f8_border = "#052E16", "#14532D"
+    _f8_status = "MARKET CALM"
 
-st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
+st.markdown(f"""
+<div style="width:100%; padding:10px 20px; border-radius:6px; display:flex; align-items:center; gap:16px; margin-top:12px; background:{_f8_bg}; border:1px solid {_f8_border};">
+  <span style="font-size:11px; font-weight:700; letter-spacing:0.1em; color:#F59E0B;">F8 FEAR REGIME</span>
+  <span style="font-size:13px; color:#D97706;">{_f8_status} &mdash; {conditions_met} of 4 conditions met</span>
+</div>
+""", unsafe_allow_html=True)
+
+# F8 condition detail expander
+with st.expander("F8 Conditions"):
+    def _f8_row(label, passed, value_str, threshold_str):
+        color = "#22C55E" if passed else ("#EF4444" if passed is False else "#64748B")
+        badge_bg = "#052E16" if passed else ("#2D0A0A" if passed is False else "#1A1A2D")
+        badge_text = "PASS" if passed else ("FAIL" if passed is False else "N/A")
+        return (
+            f'<div style="display:flex; align-items:center; padding:8px 12px; '
+            f'border-left:3px solid {color}; margin-bottom:3px; background:#0F1724; border-radius:0 4px 4px 0;">'
+            f'<div style="font-family:\'JetBrains Mono\',monospace; font-size:12px; font-weight:700; '
+            f'color:#64748B; width:40px; flex-shrink:0;">{label}</div>'
+            f'<div style="flex:1; font-size:13px; color:#CBD5E1;">{value_str}</div>'
+            f'<span style="background:{badge_bg}; color:{color}; font-size:10px; font-weight:700; '
+            f'padding:2px 8px; border-radius:4px; letter-spacing:0.06em; '
+            f'font-family:\'JetBrains Mono\',monospace; margin-right:12px;">{badge_text}</span>'
+            f'<div style="font-family:\'JetBrains Mono\',monospace; font-size:11px; color:#475569; '
+            f'text-align:right; min-width:160px;">{threshold_str}</div>'
+            f'</div>'
+        )
+
+    f8a_pass = (vix > 25) if vix is not None else None
+    f8a_val  = f"VIX: {vix:.1f}" if vix is not None else "VIX: n/a"
+    f8a_thr  = "need >25"
+
+    f8b_pass = (spy_data['vs_ema200'] < -10) if spy_data else None
+    f8b_val  = f"SPY vs 200d EMA: {spy_data['vs_ema200']:+.1f}%" if spy_data else "SPY vs 200d: n/a"
+    f8b_thr  = "need < −10%"
+
+    f8c_pass = (spy_data['off_high'] < -10) if spy_data else None
+    f8c_val  = f"SPY off high: {spy_data['off_high']:+.1f}%" if spy_data else "SPY off high: n/a"
+    f8c_thr  = "need < −10%"
+
+    f8d_pass = (fg_score < 35) if fg_score is not None else None
+    f8d_val  = f"Fear &amp; Greed: {fg_score:.1f}" if fg_score is not None else "Fear &amp; Greed: n/a"
+    f8d_thr  = "need <35"
+
+    rows_html = (
+        _f8_row("F8a", f8a_pass, f8a_val, f8a_thr) +
+        _f8_row("F8b", f8b_pass, f8b_val, f8b_thr) +
+        _f8_row("F8c", f8c_pass, f8c_val, f8c_thr) +
+        _f8_row("F8d", f8d_pass, f8d_val, f8d_thr)
+    )
+    st.markdown(
+        f'<div style="padding:4px 0;">{rows_html}'
+        f'<div style="font-size:11px; color:#475569; margin-top:8px; font-family:\'JetBrains Mono\',monospace;">'
+        f'2 of 4 conditions required to activate crash-tier entries</div></div>',
+        unsafe_allow_html=True
+    )
 
 
 # ---------------------------------------------------------------------------
 # MAIN TABS
 # ---------------------------------------------------------------------------
 tabs = st.tabs([
-    "\U0001F4BC QVM Portfolio",
-    "\U0001F6A8 Crash Watchlist", 
-    "\U0001F50D Stock Screener",
-    "\U0001F4C8 Backtest Results",
-    "\U0001F3B2 Monte Carlo",
-    "\u2699\uFE0F Settings"
+    "Portfolio",
+    "Crash Watchlist",
+    "Screener",
+    "Backtest",
+    "Monte Carlo",
+    "Settings"
 ])
 
 
@@ -553,8 +1003,7 @@ tabs = st.tabs([
 # TAB 1: QVM PORTFOLIO
 # ---------------------------------------------------------------------------
 with tabs[0]:
-    st.markdown("### \U0001F4BC QVM Rotation Portfolio")
-    st.markdown("<p style='color:#8b949e;'>Top 10 quality stocks ranked by composite value + momentum. Rebalances quarterly.</p>", unsafe_allow_html=True)
+    section_header("QVM Rotation Portfolio", "Top 10 quality stocks ranked by composite value + momentum. Rebalances quarterly.")
     
     col_refresh, col_info = st.columns([1, 3])
     with col_refresh:
@@ -754,8 +1203,7 @@ with tabs[0]:
 # TAB 2: CRASH WATCHLIST
 # ---------------------------------------------------------------------------
 with tabs[1]:
-    st.markdown("### \U0001F6A8 Crash Tier Watchlist")
-    st.markdown("<p style='color:#8b949e;'>Stocks passing quality filters (F1-F7) monitored for crash-tier entry signals (F8-F12). A stock needs 12/12 to be actionable.</p>", unsafe_allow_html=True)
+    section_header("Crash Tier Watchlist", "Stocks passing quality filters (F1-F7) monitored for crash-tier entry signals (F8-F12). A stock needs 12/12 to be actionable.")
     
     # Load watchlist
     watchlist = load_watchlist()
@@ -914,17 +1362,30 @@ with tabs[1]:
                     'Action': action,
                 })
         
-        if watchlist_data:
-            wl_df = pd.DataFrame(watchlist_data)
-            st.dataframe(wl_df, use_container_width=True, hide_index=True)
-        
-        # Show when scores were last updated
+        # Resolve last_update for data strip
+        last_update = "\u2014"
         if cached_scores:
             sample = next(iter(cached_scores.values()), {})
-            last_update = sample.get('updated', 'Unknown')
-            st.markdown(f"<p style='color:#8b949e; font-size:0.8rem;'>\u2139\uFE0F Scores from SimFin via diagnose.py | Last updated: {last_update} | Click \"Diagnose All\" to refresh</p>", unsafe_allow_html=True)
+            last_update = sample.get('updated', '\u2014')
+
+        if watchlist_data:
+            st.markdown(
+                render_watchlist_table(watchlist_data, total_count=len(watchlist), last_updated=last_update),
+                unsafe_allow_html=True
+            )
+
+        if not cached_scores:
+            st.markdown(
+                "<p style='color:#F59E0B; font-size:0.8rem; margin-top:8px;'>"
+                "No scores cached. Click \"Diagnose All\" to run full model evaluation using SimFin data.</p>",
+                unsafe_allow_html=True
+            )
         else:
-            st.markdown("<p style='color:#d29922; font-size:0.8rem;'>\u26A0\uFE0F No scores cached. Click \"Diagnose All\" to run full model evaluation using SimFin data.</p>", unsafe_allow_html=True)
+            st.markdown(
+                f"<p style='color:#475569; font-size:0.8rem; margin-top:8px;'>"
+                f"Scores from SimFin via diagnose.py &middot; Click \"Diagnose All\" to refresh</p>",
+                unsafe_allow_html=True
+            )
     else:
         st.warning("No watchlist.txt found. Create one in your project folder with one ticker per line.")
     
@@ -943,8 +1404,7 @@ with tabs[1]:
 # TAB 3: STOCK SCREENER
 # ---------------------------------------------------------------------------
 with tabs[2]:
-    st.markdown("### \U0001F50D Stock Screener")
-    st.markdown("<p style='color:#8b949e;'>Evaluate any stock against the model's filters.</p>", unsafe_allow_html=True)
+    section_header("Stock Screener", "Evaluate any stock against the model's filters.")
     
     col_input, col_btn, col_diag = st.columns([3, 1, 1])
     with col_input:
@@ -972,8 +1432,7 @@ with tabs[2]:
                     errors = result.stderr if result.stderr else ""
                     
                     if output:
-                        st.markdown("#### Full Model Evaluation")
-                        st.code(output, language="text")
+                        st.markdown(render_diagnose_report(output), unsafe_allow_html=True)
                     if errors and "error" in errors.lower():
                         st.error(f"Diagnose errors:\n{errors[:500]}")
                 except subprocess.TimeoutExpired:

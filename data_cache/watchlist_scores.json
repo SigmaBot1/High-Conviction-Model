@@ -1,284 +1,314 @@
 {
   "MSFT": {
-    "score": 11,
+    "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:09"
+    "updated": "2026-09-02 11:17"
   },
   "APPF": {
     "score": 10,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:09"
+    "updated": "2026-09-02 11:17"
   },
   "AMBA": {
-    "score": 8,
-    "total": 12,
-    "conviction": "DO NOT ENTER",
-    "updated": "2026-05-22 19:09"
-  },
-  "PLTR": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:09"
+    "updated": "2026-09-02 11:17"
+  },
+  "PLTR": {
+    "score": 8,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-09-02 11:18"
   },
   "PTC": {
     "score": 11,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:09"
+    "updated": "2026-09-02 11:17"
   },
   "ARES": {
     "score": 11,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:09"
+    "updated": "2026-09-02 11:17"
   },
   "NKE": {
     "score": 8,
     "total": 12,
     "conviction": "DO NOT ENTER",
-    "updated": "2026-05-22 19:09"
+    "updated": "2026-06-10 10:41"
   },
   "ATAT": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:09"
+    "updated": "2026-09-02 11:17"
   },
   "BIRK": {
+    "score": 8,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-09-02 11:17"
+  },
+  "AU": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:09"
-  },
-  "AU": {
-    "score": 10,
-    "total": 12,
-    "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:09"
+    "updated": "2026-09-02 11:17"
   },
   "AXON": {
-    "score": 11,
+    "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:17"
   },
   "BSX": {
     "score": 10,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:17"
   },
   "CF": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:17"
   },
   "EVR": {
     "score": 7,
     "total": 12,
     "conviction": "DO NOT ENTER",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-06-10 10:42"
   },
   "GFI": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:17"
   },
   "GRAB": {
+    "score": 7,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-06-10 10:42"
+  },
+  "GWRE": {
     "score": 8,
     "total": 12,
     "conviction": "DO NOT ENTER",
-    "updated": "2026-05-22 19:10"
-  },
-  "GWRE": {
-    "score": 9,
-    "total": 12,
-    "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-06-10 10:42"
   },
   "HL": {
-    "score": 9,
+    "score": 8,
     "total": 12,
-    "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-06-10 10:42"
   },
   "HUBS": {
-    "score": 9,
+    "score": 10,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:17"
   },
   "IAG": {
-    "score": 9,
+    "score": 8,
     "total": 12,
-    "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-06-10 10:43"
   },
   "ISRG": {
     "score": 10,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:17"
   },
   "KGC": {
-    "score": 10,
+    "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:17"
   },
   "MNST": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:17"
   },
   "NBIX": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:18"
   },
   "ONON": {
-    "score": 10,
-    "total": 12,
-    "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
-  },
-  "PODD": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:18"
+  },
+  "PODD": {
+    "score": 11,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-09-02 11:18"
   },
   "RDDT": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:18"
   },
   "SCCO": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:10"
+    "updated": "2026-09-02 11:18"
   },
   "SE": {
     "score": 7,
     "total": 12,
     "conviction": "DO NOT ENTER",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-06-10 10:43"
   },
   "SN": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-09-02 11:18"
   },
   "VEEV": {
     "score": 10,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-09-02 11:18"
   },
   "WTS": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-09-02 11:18"
   },
   "Z": {
     "score": 7,
     "total": 12,
     "conviction": "DO NOT ENTER",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-06-10 10:43"
   },
   "CLBT": {
-    "score": 9,
+    "score": 8,
     "total": 12,
-    "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-09-02 11:18"
   },
   "CXT": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-09-02 11:18"
   },
   "DAVE": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-09-02 11:18"
   },
   "DSGX": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-09-02 11:18"
   },
   "DUOL": {
     "score": 10,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-09-02 11:18"
   },
   "ELF": {
-    "score": 8,
+    "score": 10,
     "total": 12,
-    "conviction": "DO NOT ENTER",
-    "updated": "2026-05-22 19:11"
+    "conviction": "MEDIUM",
+    "updated": "2026-09-02 11:18"
   },
   "FROG": {
     "score": 8,
     "total": 12,
     "conviction": "DO NOT ENTER",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-06-10 10:44"
   },
   "GLBE": {
-    "score": 9,
+    "score": 8,
     "total": 12,
-    "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-09-02 11:18"
   },
   "LEGN": {
-    "score": 9,
+    "score": 8,
     "total": 12,
-    "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-09-02 11:18"
   },
   "LIF": {
-    "score": 9,
+    "score": 8,
     "total": 12,
-    "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-09-02 11:18"
   },
   "MNDY": {
     "score": 10,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-09-02 11:18"
   },
   "PRDO": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-09-02 11:18"
   },
   "SEZL": {
-    "score": 10,
-    "total": 12,
-    "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
-  },
-  "OKTA": {
     "score": 9,
     "total": 12,
     "conviction": "MEDIUM",
-    "updated": "2026-05-22 19:11"
+    "updated": "2026-09-02 11:18"
+  },
+  "OKTA": {
+    "score": 8,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-06-10 10:44"
+  },
+  "META": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-09-02 11:18"
+  },
+  "NVDA": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-09-02 11:18"
+  },
+  "TSM": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-09-02 11:18"
+  },
+  "ASR": {
+    "score": 8,
+    "total": 12,
+    "conviction": "DO NOT ENTER",
+    "updated": "2026-09-02 11:18"
+  },
+  "AVPT": {
+    "score": 9,
+    "total": 12,
+    "conviction": "MEDIUM",
+    "updated": "2026-09-02 11:18"
   }
 }

@@ -673,7 +673,19 @@ class SignalGenerator:
         if profitable:
             pe  = self._get_pe(ticker, date, fa, mc)
             peg = fa.peg_ratio(date, pe) if pe else None
-            results["f6_peg_ps"] = None if peg is None else peg < self.cfg.MAX_PEG_RATIO
+            if peg is not None:
+                results["f6_peg_ps"] = peg < self.cfg.MAX_PEG_RATIO
+            else:
+                ps = fa.ps_ratio(date, mc) if mc else None
+                g1 = rev_growth[0] if rev_growth else None
+                if ps is None:
+                    results["f6_peg_ps"] = None
+                else:
+                    results["f6_peg_ps"] = (
+                        ps < self.cfg.MAX_PS_PRE_PROFITABLE
+                        and g1 is not None
+                        and g1 > self.cfg.MIN_GROWTH_PRE_PROFITABLE
+                    )
         else:
             ps  = fa.ps_ratio(date, mc) if mc else None
             g1  = rev_growth[0] if rev_growth else None
