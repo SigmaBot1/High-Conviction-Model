@@ -1369,6 +1369,21 @@ with tabs[1]:
             sample = next(iter(cached_scores.values()), {})
             last_update = sample.get('updated', '\u2014')
 
+        def watchlist_sort_key(item):
+            try:
+                score = int(item.get('Score', '0/12').split('/')[0])
+            except Exception:
+                score = 0
+            if score >= 11:
+                tier = 0
+            elif score >= 9:
+                tier = 1
+            else:
+                tier = 2
+            return (tier, -score, item.get('Ticker', ''))
+
+        watchlist_data.sort(key=watchlist_sort_key)
+
         if watchlist_data:
             st.markdown(
                 render_watchlist_table(watchlist_data, total_count=len(watchlist), last_updated=last_update),
