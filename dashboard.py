@@ -15,7 +15,28 @@ import sys
 import re
 import json
 import glob
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+
+# ---------------------------------------------------------------------------
+# QVM PORTFOLIO CONSTANTS
+# ---------------------------------------------------------------------------
+QVM_INCEPTION_DATE = "April 17, 2026"
+QVM_INCEPTION_COST = 3420.31
+
+
+def next_quarter_end():
+    today = date.today()
+    month = today.month
+    year = today.year
+    if month <= 3:
+        return f"March 31, {year}"
+    elif month <= 6:
+        return f"June 30, {year}"
+    elif month <= 9:
+        return f"September 30, {year}"
+    else:
+        return f"December 31, {year}"
+
 
 # ---------------------------------------------------------------------------
 # PAGE CONFIG
@@ -895,7 +916,11 @@ with col4:
 
 with col5:
     qvm_val = f"{qvm_total_pnl_pct:+.2f}%" if qvm_has_data else "---"
-    qvm_sub = f"${qvm_total_pnl_dollar:+,.0f}" if qvm_has_data else "Set entry prices"
+    if qvm_has_data:
+        qvm_inception_pct = (qvm_total_value - QVM_INCEPTION_COST) / QVM_INCEPTION_COST * 100
+        qvm_sub = f"${qvm_total_pnl_dollar:+,.0f}<br>Since Apr 17: {qvm_inception_pct:+.1f}%"
+    else:
+        qvm_sub = "Set entry prices"
     st.markdown(_card("QVM P&amp;L", qvm_val, qvm_sub), unsafe_allow_html=True)
 
 with col6:
@@ -1010,7 +1035,7 @@ with tabs[0]:
     with col_refresh:
         refresh_qvm = st.button("\U0001F504 Run QVM Ranking", key="refresh_qvm")
     with col_info:
-        next_rebalance = "June 30, 2026"
+        next_rebalance = next_quarter_end()
         st.markdown(f"<p style='color:#8b949e; padding-top:8px;'>Next rebalance: <strong style='color:#58a6ff;'>{next_rebalance}</strong></p>", unsafe_allow_html=True)
     
     # Run QVM ranking if button pressed
